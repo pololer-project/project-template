@@ -105,18 +105,19 @@ def mux_episode(
         clean_work_dirs=False,
     )
 
-    log.debug(f"Starting mux of episode {episode_number:02d}")
+    # Only check video files if not in dry-run mode
+    video_file = None
+    if RunMode.DRYRUN not in mode:
+        video_search = GlobSearch(f"*{setup.episode}*.mkv", dir=dirPremux)
+        if not video_search.paths:
+            log.warn(
+                f"Skipping episode {episode_number:02d}: Video file not found",
+                mux_episode,
+            )
+            return None
 
-    # Find video source file using the paths attribute
-    video_search = GlobSearch(f"*{setup.episode}*.mkv", dir=dirPremux)
-    if not video_search.paths:
-        log.warn(
-            f"Skipping episode {episode_number:02d}: Video file not found", mux_episode
-        )
-        return None
-
-    video_file = video_search.paths[0]
-    setup.set_default_sub_timesource(video_file)
+        video_file = video_search.paths[0]
+        setup.set_default_sub_timesource(video_file)
 
     premux = (
         None

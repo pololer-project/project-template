@@ -29,10 +29,10 @@ jobs:
 
       - name: Run mux-system.py tests
         run: |
-          python mux-system.py 01 -d
+          python mux-system.py all -d
 
       - name: Upload test workdir
         uses: actions/upload-artifact@main
         with:
           name: workdir
-          path: /*
+          path: /_workdir/*
