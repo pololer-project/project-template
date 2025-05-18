@@ -11,9 +11,12 @@ PlayResY: 1080
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: ED1,Atomic,64,&H00FFFFFF,&HB4FFFFFF,&H00FB7502,&H00FFD66B,0,0,0,0,175,100,0.8,0,1,0,0,2,100,100,60,1
+Style: OP1,Atomic,64,&H00FFFFFF,&HB4FFFFFF,&H00FB7502,&H00FFD66B,0,0,0,0,175,100,0.8,0,1,0,0,2,100,100,60,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Comment: 0,0:21:36.19,0:21:36.19,Default,sync,0,0,0,,{OPSync — Test}
-Comment: 0,0:21:30.89,0:21:30.89,ED1,,0,0,0,-- README --,{=2374}Template written for The0x. Please contact us over at the pololer-project Discord if you need the effects for different languages!
+Dialogue: 0,0:00:00.00,0:00:00.00,Default,,0,0,0,{opsync},{opsync}
+Dialogue: 0,0:00:00.00,0:00:00.00,OP1,,0,0,0,-- README --,{=2374}Template written for The0x. Please contact us over at the pololer-project Discord if you need the effects for different languages!
+Dialogue: 0,0:00:00.00,0:00:03.00,OP1,,0,0,0,,test
+Dialogue: 0,0:00:03.00,0:00:06.00,OP1,,0,0,0,,test
+Dialogue: 0,0:00:06.00,0:00:09.00,OP1,,0,0,0,,test

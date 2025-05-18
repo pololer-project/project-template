@@ -60,7 +60,7 @@ class RunMode(Flag):
 showName = "JudulAnime"  # Name of the anime show
 dirPremux = r""
 dirAudio = r""
-dirSub = r""
+dirSub = r"./"
 intTmdb = 0  # TMDB ID for the show (0 if not used)
 
 
@@ -154,6 +154,17 @@ def mux_episode(
             f"Skipping episode {episode_number:02d}: Audio files missing", mux_episode
         )
         return None
+
+    subFiles.merge(f"./{setup.episode}/{setup.show_name} - {setup.episode} - TS.ass")
+
+    songs = [
+        ("OP", "{opsync}", {1}),
+        ("ED", "{edsync}", {1}),
+    ]
+    log.info("Merging songs...")
+    for song, syncpoint_str, song_episodes in songs:
+        if episode_number in song_episodes:
+            subFiles = subFiles.merge(f"./songs/{song}.ass", syncpoint_str)
 
     subFiles.merge(r"./common/warning.ass").clean_garbage()
     chapters = Chapters.from_sub(subFiles, use_actor_field=True)
