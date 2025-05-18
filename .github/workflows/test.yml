@@ -38,7 +38,7 @@ jobs:
           uv python3 mux-system.py --dry-run 1
 
       - name: Upload test workdir
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@main
         with:
           name: workdir
           path: /_workdir
