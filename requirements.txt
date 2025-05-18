@@ -1,0 +1,5 @@
+sox==1.5.0
+
+# muxtools
+muxtools @ git+https://github.com/Jaded-Encoding-Thaumaturgy/muxtools
+vsmuxtools @ git+https://github.com/Jaded-Encoding-Thaumaturgy/vs-muxtools
