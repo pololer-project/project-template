@@ -35,7 +35,7 @@ jobs:
 
       - name: Run mux-system.py tests
         run: |
-          uv python mux-system.py --dry-run 1
+          uv pytest
 
       - name: Upload test workdir
         uses: actions/upload-artifact@main
