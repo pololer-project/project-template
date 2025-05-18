@@ -136,9 +136,10 @@ def mux_episode(
     )
     audioFiles = AudioFile(audio_search.paths) if audio_search.paths else None
 
-    # Find subtitle and audio files using the paths attribute
-    sub_search = GlobSearch(f"*{setup.episode}*.ass", allow_multiple=True, dir=dirSub)
-    subFiles = SubFile(sub_search.paths) if sub_search.paths else None
+    subFiles = SubFile(
+        f"./{setup.episode}/{setup.show_name} - {setup.episode} - Dialog.ass"
+    )
+    # if sub_search.paths else None
 
     # Check if required files exist
     if not subFiles:
@@ -154,16 +155,14 @@ def mux_episode(
         )
         return None
 
+    subFiles.merge(f"./{setup.episode}/{setup.show_name} - {setup.episode} - TS.ass")
     subFiles.merge(
-        f"./{setup.episode}/{setup.show_name} - {setup.episode}*TS*.ass",
-    )
-    subFiles.merge(
-        f"./{setup.episode}/{setup.show_name} - {setup.episode}*OP*.ass",
+        f"./{setup.episode}/{setup.show_name} - {setup.episode} - OP.ass",
         "opsync",
         "sync",
     )
     subFiles.merge(
-        f"./{setup.episode}/{setup.show_name} - {setup.episode}*ED*.ass",
+        f"./{setup.episode}/{setup.show_name} - {setup.episode} - ED.ass",
         "edsync",
         "sync",
     )
