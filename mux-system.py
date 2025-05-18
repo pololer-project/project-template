@@ -155,20 +155,11 @@ def mux_episode(
         )
         return None
 
-    subFiles.merge(f"./{setup.episode}/{setup.show_name} - {setup.episode} - TS.ass")
-    subFiles.merge(
-        f"./{setup.episode}/{setup.show_name} - {setup.episode} - OP.ass",
-        "opsync",
-        "sync",
-    )
-    subFiles.merge(
-        f"./{setup.episode}/{setup.show_name} - {setup.episode} - ED.ass",
-        "edsync",
-        "sync",
-    )
     subFiles.merge(r"./common/warning.ass").clean_garbage()
     chapters = Chapters.from_sub(subFiles, use_actor_field=True)
-    fonts = subFiles.collect_fonts(use_system_fonts=False, additional_fonts="*")
+    fonts = subFiles.collect_fonts(
+        use_system_fonts=False, additional_fonts=f"./{setup.episode}/fonts"
+    )
 
     if RunMode.DRYRUN not in mode:
         try:
