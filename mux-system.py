@@ -94,15 +94,12 @@ def mux_episode(
     # Format version string (empty for v1)
     verstr = "" if version == 1 else f"v{version}"
 
-    # Use provided flag or default to "testing"
-    flagstr = flag
-
     # Initialize setup with appropriate episode and naming conventions
     setup = Setup(
         f"{episode_number:02d}",
         None,
         show_name=showName,
-        out_name=f"[{flagstr}] $show$ - $ep${verstr} (BDRip 1920x1080 HEVC FLAC) [$crc32$]",
+        out_name=f"[{flag}] $show$ - $ep${verstr} (BDRip 1920x1080 HEVC FLAC) [$crc32$]",
         mkv_title_naming=f"$show$ - $ep${verstr}",
         out_dir=out_dir,
         clean_work_dirs=False,
@@ -133,14 +130,14 @@ def mux_episode(
         )
     )
 
-    # Find subtitle and audio files using the paths attribute
-    sub_search = GlobSearch(f"*{setup.episode}*.ass", allow_multiple=True, dir=dirSub)
-    subFiles = SubFile(sub_search.paths) if sub_search.paths else None
-
     audio_search = GlobSearch(
         f"*{setup.episode}*.flac", allow_multiple=True, dir=dirAudio
     )
     audioFiles = AudioFile(audio_search.paths) if audio_search.paths else None
+
+    # Find subtitle and audio files using the paths attribute
+    sub_search = GlobSearch(f"*{setup.episode}*.ass", allow_multiple=True, dir=dirSub)
+    subFiles = SubFile(sub_search.paths) if sub_search.paths else None
 
     # Check if required files exist
     if not subFiles:
@@ -163,15 +160,13 @@ def mux_episode(
         f"./{setup.episode}/{setup.show_name} - {setup.episode}*OP*.ass",
         "opsync",
         "sync",
-        use_actor_field=True,
     )
     subFiles.merge(
         f"./{setup.episode}/{setup.show_name} - {setup.episode}*ED*.ass",
         "edsync",
         "sync",
-        use_actor_field=True,
     )
-    subFiles.merge(r"./common/warning.ass")
+    subFiles.merge(r"./common/warning.ass").clean_garbage()
     chapters = Chapters.from_sub(subFiles, use_actor_field=True)
     fonts = subFiles.collect_fonts(use_system_fonts=False, additional_fonts="*")
 
@@ -180,12 +175,10 @@ def mux_episode(
             # Perform the actual muxing
             outfile: Path = mux(
                 premux,
-                audioFiles.to_track("Japanese", "ja", default=True)
-                if audioFiles
-                else None,
-                subFiles.to_track(f"{flagstr}", "id", default=True),
+                audioFiles.to_track("Japanese", "ja", default=True),
+                subFiles.to_track(f"{flag}", "id", default=True),
                 *fonts,
-                chapters if chapters else None,
+                chapters,
                 tmdb=TmdbConfig(intTmdb, write_cover=True),
             )
             print(f"Successfully muxed: {outfile.name}")
