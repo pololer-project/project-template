@@ -11,7 +11,7 @@ PlayResY: 1080
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: ED1,Atomic,64,&H00FFFFFF,&HB4FFFFFF,&H00FB7502,&H00FFD66B,0,0,0,0,175,100,0.8,0,1,0,0,2,100,100,60,1
+Style: ED1,LTFinnegan Medium,64,&H00FFFFFF,&HB4FFFFFF,&H00FB7502,&H00FFD66B,0,0,0,0,175,100,0.8,0,1,0,0,2,100,100,60,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text

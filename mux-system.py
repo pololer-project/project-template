@@ -63,6 +63,11 @@ dirAudio = r""
 dirSub = r"./"
 intTmdb = 0  # TMDB ID for the show (0 if not used)
 
+songs = [
+    ("OP", "{opsync}", {1}),
+    ("ED", "{edsync}", {1}),
+]
+
 
 def mux_episode(
     episode_number: int,
@@ -104,6 +109,8 @@ def mux_episode(
         out_dir=out_dir,
         clean_work_dirs=False,
     )
+
+    log.debug(f"Starting mux of episode {episode_number:02d}")
 
     # Only check video files if not in dry-run mode
     video_file = None
@@ -157,10 +164,6 @@ def mux_episode(
 
     subFiles.merge(f"./{setup.episode}/{setup.show_name} - {setup.episode} - TS.ass")
 
-    songs = [
-        ("OP", "{opsync}", {1}),
-        ("ED", "{edsync}", {1}),
-    ]
     log.info("Merging songs...")
     for song, syncpoint_str, song_episodes in songs:
         if episode_number in song_episodes:
@@ -169,7 +172,8 @@ def mux_episode(
     subFiles.merge(r"./common/warning.ass").clean_garbage()
     chapters = Chapters.from_sub(subFiles, use_actor_field=True)
     fonts = subFiles.collect_fonts(
-        use_system_fonts=False, additional_fonts=f"./{setup.episode}/fonts"
+        use_system_fonts=False,
+        additional_fonts=[f"{setup.episode}/fonts", r"./songs/fonts"],
     )
 
     if RunMode.DRYRUN not in mode:
