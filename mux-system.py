@@ -63,6 +63,11 @@ dirAudio = r""
 dirSub = r"./"
 intTmdb = 0  # TMDB ID for the show (0 if not used)
 
+titles = [
+    r"Judul Episode 01",
+    r"Judul Episode 02",
+]
+
 songs = [
     ("OP", "{opsync}", {1}),
     ("ED", "{edsync}", {1}),
@@ -98,6 +103,8 @@ def mux_episode(
     """
     # Format version string (empty for v1)
     verstr = "" if version == 1 else f"v{version}"
+    # Format episode title (empty if titles are not provided)
+    epstitle = "" if titles == "" else f" | {titles[episode_number - 1]}"
 
     # Initialize setup with appropriate episode and naming conventions
     setup = Setup(
@@ -105,7 +112,7 @@ def mux_episode(
         None,
         show_name=showName,
         out_name=f"[{flag}] $show$ - $ep${verstr} (BDRip 1920x1080 HEVC FLAC) [$crc32$]",
-        mkv_title_naming=f"$show$ - $ep${verstr}",
+        mkv_title_naming=f"$show$ - $ep${verstr}{epstitle}",
         out_dir=out_dir,
         clean_work_dirs=False,
     )
